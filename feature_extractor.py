@@ -173,8 +173,14 @@ class FeatureExtractor:
         
         d6 = Pmf(distances)
         d6.normalize()
-        values = np.array([math.log(item)
-                        for item in list(d6.values())]).reshape(-1, 1)
+        temp_array = []
+        
+        for item in list(d6.values()):
+            try:
+                temp_array.append(math.log(item))
+            except ValueError:
+                return 0
+        values = np.array(temp_array).reshape(-1, 1)
         lm = HuberRegressor()
         lm.fit(np.array(list(d6.keys())).reshape(-1, 1), values)
         a = -1 * (1/lm.coef_)
