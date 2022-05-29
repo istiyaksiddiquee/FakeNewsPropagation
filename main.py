@@ -28,12 +28,13 @@ def processor():
     BASE_DIR = '../'
     output_dir = BASE_DIR + 'output_dir/'
 
-    start_point = 21
-    end_point = 70
+    start_point = 0
+    end_point = 71
 
     for sub_folder_id in range(start_point, end_point + 1):
         start_timestamp = time()
         df = pd.DataFrame({
+                'cascade_root_id': [],
                 'depth' : [], 
                 'size' : [], 
                 'max_breadth' : [], 
@@ -56,9 +57,9 @@ def processor():
             with open(sub_folder + '/' + str(file_addr), 'rb') as handle:
                 graph = pickle.load(handle)
             
-            
             feature_extrator = FeatureExtractor(graph=graph)
-            df.loc[len(df.index)] = list(feature_extrator.extract_features(root=int(root_tid)))
+            entry = (root_tid, ) + feature_extrator.extract_features(root=int(root_tid))
+            df.loc[len(df.index)] = list(entry)
 
         df.to_csv(output_dir + str(sub_folder_id)+'.csv', sep=',', encoding='utf-8')
         del df
@@ -68,4 +69,9 @@ def processor():
         print("{} folder took : {} minutes".format(sub_folder_id, (end_timestamp-start_timestamp)/60))
 
 if __name__ == "__main__":
+
+    start_timestamp = time()
     processor()
+    end_timestamp = time()
+
+    print("Total time it took : {} minutes".format((end_timestamp-start_timestamp)/60))
