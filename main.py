@@ -28,8 +28,8 @@ def processor():
     BASE_DIR = '../'
     output_dir = BASE_DIR + 'output_dir/'
 
-    start_point = 0 
-    end_point = 20
+    start_point = 21
+    end_point = 70
 
     for sub_folder_id in range(start_point, end_point + 1):
         start_timestamp = time()
@@ -65,7 +65,7 @@ def processor():
         
         end_timestamp = time()
 
-        print("{} folder took : {} minutes".format(sub_folder_id, (start_timestamp-end_timestamp)/60))
+        print("{} folder took : {} minutes".format(sub_folder_id, (end_timestamp-start_timestamp)/60))
 
 if __name__ == "__main__":
     processor()
