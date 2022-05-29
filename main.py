@@ -25,7 +25,7 @@ steps for data extraction
 
 def processor():
 
-    BASE_DIR = './'
+    BASE_DIR = '../'
     output_dir = BASE_DIR + 'output_dir/'
 
     start_point = 0 
